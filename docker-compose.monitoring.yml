@@ -1,0 +1,41 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    restart: always
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - "8082:8080"
+    restart: always
+
+  mysql-exporter:
+    image: prom/mysqld-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "root:root_password_123@(mysql:3306)/"
+    depends_on:
+      - mysql
+    restart: always
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    command:
+      - -nginx.scrape-uri=http://nginx:8080/stub_status
+    depends_on:
+      - nginx
+    restart: always
