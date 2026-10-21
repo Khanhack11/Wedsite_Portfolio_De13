@@ -1,15 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - <%= profile.full_name %></title>
-    <style>body { font-family: Arial; padding: 50px; background: #f4f4f9; }</style>
+    <style>
+        :root {
+            --bg-color: #0b1120;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --text-main: #f9fafb;
+            --text-sub: #9ca3af;
+            --accent-cyan: #06b6d4;
+            --accent-cyan-bg: rgba(6, 182, 212, 0.1);
+            --accent-green: #10b981;
+            --tag-bg: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 48px;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .nav-brand { font-size: 15px; font-weight: 700; letter-spacing: 0.05em; color: var(--accent-cyan); }
+        .nav-brand span { color: #fff; }
+        .nav-links a { color: var(--text-sub); text-decoration: none; margin-left: 24px; font-size: 14px; transition: 0.2s; }
+        .nav-links a:hover { color: #fff; }
+        .btn-logout {
+            color: #ef4444 !important;
+            padding: 6px 14px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 48px 24px; }
+
+        /* Profile Hero */
+        .hero { margin-bottom: 56px; }
+        .badge-role {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            background: var(--accent-cyan-bg);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 16px;
+            letter-spacing: 0.08em;
+        }
+        .hero h1 { font-size: 42px; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.02em; }
+        .hero-subtitle { font-size: 18px; color: var(--accent-cyan); margin-bottom: 16px; font-weight: 500; }
+        .hero-desc { font-size: 15px; color: var(--text-sub); max-width: 780px; margin-bottom: 24px; }
+        .hero-actions { display: flex; gap: 12px; }
+        .btn-action {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-primary { background: var(--accent-cyan); color: #0b1120; }
+        .btn-primary:hover { background: #0891b2; }
+        .btn-secondary { background: var(--tag-bg); color: #fff; border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: #334155; }
+
+        /* Section */
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .section-heading { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 24px; }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 14px;
+            margin-bottom: 56px;
+        }
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            transition: 0.2s;
+        }
+        .skill-card:hover { border-color: var(--accent-cyan); }
+        .skill-card h4 { font-size: 15px; color: #fff; margin-bottom: 4px; }
+        .skill-card p { font-size: 12px; color: var(--text-sub); }
+
+        /* Projects List */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 22px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .project-info h3 { font-size: 17px; color: #fff; margin-bottom: 6px; }
+        .project-info p { font-size: 13px; color: var(--text-sub); margin-bottom: 8px; }
+        .tech-pill {
+            display: inline-block;
+            font-size: 11px;
+            background: var(--tag-bg);
+            color: var(--accent-cyan);
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+        }
+        .status-badge {
+            font-size: 11px;
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.15);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-    <h1>Portfolio Cá Nhân</h1>
-    <p><strong>Họ tên:</strong> <%= profile.full_name %></p>
-    <p><strong>Mã SV:</strong> <%= profile.student_id %></p>
-    <p><strong>Email:</strong> <%= profile.email %></p>
-    <p><strong>Ngành:</strong> <%= profile.major %></p>
+    <nav>
+        <div class="nav-brand">PORTFOLIO <span>/ ATTT</span></div>
+        <div class="nav-links">
+            <a href="/">Trang chủ</a>
+            <a href="https://github.com/Khanhack11/Wedsite_Portfolio_De13" target="_blank">GitHub</a>
+            <a href="/logout" class="btn-logout">Đăng xuất</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Profile -->
+        <section class="hero">
+            <span class="badge-role">Lớp trưởng · ATTT K23A · ICTU</span>
+            <h1><%= profile.full_name %></h1>
+            <div class="hero-subtitle">Sinh viên An toàn thông tin · Mã SV: <%= profile.student_id %></div>
+            <p class="hero-desc">
+                Tôi là <%= profile.full_name %>, giữ chức vụ Lớp trưởng lớp An toàn thông tin K23A (Khoa CNTT - Trường Đại học Công nghệ Thông tin và Truyền thông Thái Nguyên). 
+                Portfolio trình bày kết quả thực nghiệm Triển khai và Quản trị Hệ thống Phần mềm (Đề 13): Đóng gói Docker Compose, Reverse Proxy Nginx, Database MySQL, giám sát Prometheus, Dashboard Grafana và thu gom Log Loki/Promtail.
+            </p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn-action btn-primary">Xem dự án</a>
+                <a href="mailto:<%= profile.email %>" class="btn-action btn-secondary"><%= profile.email %></a>
+                <a href="https://github.com/Khanhack11/Wedsite_Portfolio_De13" target="_blank" class="btn-action btn-secondary">GitHub Repo</a>
+            </div>
+        </section>
+
+        <!-- Kỹ năng -->
+        <section>
+            <div class="section-title">Năng lực cốt lõi</div>
+            <div class="section-heading">Kỹ năng kỹ thuật</div>
+            <div class="skills-grid">
+                <div class="skill-card"><h4>Linux</h4><p>Ubuntu, Alpine, CLI, bash</p></div>
+                <div class="skill-card"><h4>Docker Compose</h4><p>Multi-stage stack, hardening</p></div>
+                <div class="skill-card"><h4>Nginx</h4><p>Reverse Proxy, TLS 8443, SSL</p></div>
+                <div class="skill-card"><h4>MySQL</h4><p>phpMyAdmin, CRUD, Session</p></div>
+                <div class="skill-card"><h4>Node.js / Express</h4><p>EJS, API, Authentication</p></div>
+                <div class="skill-card"><h4>Prometheus</h4><p>Scrape metrics, Exporters</p></div>
+                <div class="skill-card"><h4>Grafana</h4><p>Dashboards, Alerting, Metrics</p></div>
+                <div class="skill-card"><h4>Loki & Promtail</h4><p>LogQL, Centralized Logging</p></div>
+            </div>
+        </section>
+
+        <!-- Dự án -->
+        <section id="projects">
+            <div class="section-title">Sản phẩm thực hành</div>
+            <div class="section-heading">Dự án Đề tài 13</div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Đồ án Đề 13: Website Portfolio và Quản trị hệ thống</h3>
+                        <p>Triển khai ứng dụng web đầy đủ các lớp hạ tầng mạng, CSDL và hệ thống giám sát thời gian thực.</p>
+                        <div>
+                            <span class="tech-pill">Docker</span>
+                            <span class="tech-pill">Nginx TLS</span>
+                            <span class="tech-pill">Node.js</span>
+                            <span class="tech-pill">MySQL 8.4</span>
+                        </div>
+                    </div>
+                    <div class="status-badge">Hoàn thành</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Giám sát hệ thống & Thu thập chỉ số</h3>
+                        <p>Tích hợp cAdvisor, Nginx Prometheus Exporter và MySQL Exporter giám sát tài nguyên CPU, RAM, Network.</p>
+                        <div>
+                            <span class="tech-pill">Prometheus</span>
+                            <span class="tech-pill">Grafana</span>
+                            <span class="tech-pill">cAdvisor</span>
+                        </div>
+                    </div>
+                    <div class="status-badge">Đang chạy</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Tập trung và Phân tích nhật ký (Logging)</h3>
+                        <p>Cấu hình Promtail tự động thu gom access log Nginx và log ứng dụng JSON đẩy về Loki để truy vấn bằng LogQL.</p>
+                        <div>
+                            <span class="tech-pill">Loki</span>
+                            <span class="tech-pill">Promtail</span>
+                            <span class="tech-pill">LogQL</span>
+                        </div>
+                    </div>
+                    <div class="status-badge">Đang chạy</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Hardening an toàn và Sao lưu dự phòng</h3>
+                        <p>Cấu hình container non-root, cô lập mạng database internal, security headers và script sao lưu mysqldump.</p>
+                        <div>
+                            <span class="tech-pill">UID/GID</span>
+                            <span class="tech-pill">Internal Network</span>
+                            <span class="tech-pill">Backup/Restore</span>
+                        </div>
+                    </div>
+                    <div class="status-badge">Kiểm thử đạt</div>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 </html>

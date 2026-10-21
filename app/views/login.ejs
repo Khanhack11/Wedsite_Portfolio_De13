@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập Quản trị - Portfolio ICTU</title>
+    <style>
+        :root {
+            --bg-color: #0b1120;
+            --card-bg: #111827;
+            --text-main: #f9fafb;
+            --text-sub: #9ca3af;
+            --accent-cyan: #06b6d4;
+            --accent-hover: #0891b2;
+            --input-bg: #1f2937;
+            --border-color: #374151;
+            --error-color: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .header { text-align: center; margin-bottom: 28px; }
+        .header .badge {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .header h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .header p { font-size: 13px; color: var(--text-sub); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-main); }
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus { border-color: var(--accent-cyan); }
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-cyan);
+            color: #0b1120;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        .btn-submit:hover { background-color: var(--accent-hover); }
+        .error-message {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .footer-note { text-align: center; margin-top: 24px; font-size: 12px; color: var(--text-sub); }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="header">
+            <span class="badge">ICTU · ATTT K23A</span>
+            <h2>Đăng nhập Quản trị</h2>
+            <p>Hệ thống Portfolio & Quản trị Nội dung (Đề 13)</p>
+        </div>
+        <% if(error) { %>
+            <div class="error-message"><%= error %></div>
+        <% } %>
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label>Tên tài khoản</label>
+                <input type="text" name="username" placeholder="Nhập tài khoản admin..." required autofocus autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label>Mật khẩu</label>
+                <input type="password" name="password" placeholder="Nhập mật khẩu..." required>
+            </div>
+            <button type="submit" class="btn-submit">Đăng nhập</button>
+        </form>
+        <div class="footer-note">Nguyễn Quốc Khánh · DTC245220042</div>
+    </div>
+</body>
+</html>
